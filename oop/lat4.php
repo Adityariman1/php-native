@@ -43,13 +43,16 @@ class kucing
     {
         if ($kaki == 4) {
             echo "Warna Kucing : " . $warna . "<br>";
-            echo "Memiliki Kaki : " . $kaki . " Normal";
+            echo "Memiliki " . $kaki . " kaki<br>";
+            echo "Keterangan : Normal";
         } else if ($kaki == 3) {
             echo "Warna Kucing : " . $warna . "<br>";
-            echo "Memiliki Kaki : " . $kaki . " Cingked";
+            echo "Memiliki " . $kaki . " kaki<br>";
+            echo "Keterangan : Cingked";
         } else if ($kaki == 5) {
             echo "Warna Kucing : " . $warna . "<br>";
-            echo "Memiliki Kaki : " . $kaki . " ucing edan";
+            echo "Memiliki " . $kaki . " kaki<br>";
+            echo "Keterangan : Siluman Kucing";
         }
 
     }
