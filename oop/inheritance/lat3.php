@@ -31,7 +31,7 @@
                     <td><select name="pembayaran" id="">
                         <option value="cash">Cash</option>
                         <option value="m-banking">M-Banking</option>
-                        <option value="Gopay">Gopay</option>
+                        <option value="gopay">Gopay</option>
                         <option value="pickup">Pickup</option>
                     </select></td>
                 </tr>
@@ -54,43 +54,66 @@ if (isset($_POST['submit'])) {
         public $harga;
         public $jumlah;
         public $pembayaran;
-        public $total = $this->harga * $this->jumlah;
 
-        public function __construct($a, $b, $c, $d, $e)
+        public function __construct($a, $b, $c, $d)
         {
             $this->nama = $a;
             $this->harga = $b;
             $this->jumlah = $c;
             $this->pembayaran = $d;
-            $this->total = $e;
         }
     }
     class pembayaran extends gofud
     {
-        
-        
+
         public function bayar()
         {
-            
+            $total = $this->harga * $this->jumlah;
+
             if ($total >= 250000) {
-                $diskon = (($total * 15) / 100);
+                $diskon = $total * (15 / 100);
+                $nilai = (15 / 100) * $total;
+                echo "Hasil Jumlah : " . $total . "<br>";
+                echo "Mendapatkan Diskon 15 % : $nilai<br>";
+
             } else {
-                $diskon = (($total * 10) / 100);
+                $diskon = $total * 0.10;
+                $nilai = (10 / 100) * $total;
+                echo "Hasil Jumlah : " . $total . "<br>";
+                echo "Mendapatkan Diskon 10 %: $nilai<br>";
+
             }
-            return $diskon;
+
+            if ($this->pembayaran == "cash") {
+                $hasil = $total - $diskon;
+            } else if ($this->pembayaran == "m-banking") {
+                $jumlah = $total * (2.5 / 100);
+                $hasil = $total - $diskon - $jumlah;
+                $nilai = (2.5 / 100) * $total;
+                echo "Mendapatkan Diskon 2.5% : $nilai<br>";
+            } else if ($this->pembayaran == "gopay") {
+                $jumlah = $total * (10 / 100);
+                $hasil = $total - $diskon - $jumlah;
+                $nilai = (10 / 100) * $total;
+                echo "Mendapatkan Diskon 10 % : $nilai<br>";
+            } else {
+                $jumlah = $total * (1.5 / 100);
+                $hasil = $total - $diskon - $jumlah;
+                $nilai = (1.5 / 100) * $total;
+                echo "Mendapatkan Diskon 1.5 % : $nilai<br>";
+            }
+            return $hasil;
         }
+
     }
 }
 
-$gofud = new pembayaran ($nama, $harga, $jumlah, $pembayaran);
+$gofud = new pembayaran($nama, $harga, $jumlah, $pembayaran);
 echo "Nama : " . $gofud->nama . "<br>";
 echo "Harga : " . $gofud->harga . "<br>";
 echo "Jumlah Pesanan : " . $gofud->jumlah . "<br>";
 echo "Jenis Pembayaran : " . $gofud->pembayaran . "<br>";
-echo "Total :" . $gofud->bayar();
-
- 
-
+echo "Total Pembayaran : " . $gofud->bayar();
 ?>
     </fieldset>
 </body>
